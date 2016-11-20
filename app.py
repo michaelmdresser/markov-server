@@ -38,13 +38,13 @@ def index():
 
   # generates a tweet, the chosen number of sentences, or defaults to two sentences
   if size == "tweet":
-    newSpeech += " " + model.make_short_sentence(140)
+    newSpeech += model.make_short_sentence(140)
   elif is_int(size):
     for i in range(int(size)):
-      newSpeech += " " + model.make_sentence()
+      newSpeech += model.make_sentence()
   else size == "":
     for i in range(2):
-      newSpeech += " " + model.make_sentence()
+      newSpeech += model.make_sentence()
 
   return jsonify({
     "content": newSpeech
