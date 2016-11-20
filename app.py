@@ -6,6 +6,7 @@ import markovify
 import random
 import os
 
+# checks if input can be converted to an integer
 def is_int(input):
   try:
     num = int(input)
@@ -21,24 +22,26 @@ CORS(app)
 def index():
 
   size = ""
+  newSpeech = ""
 
+  # size is used to determine the number of sentences to generate or if a tweet
+  # should be generated
   if request.args.get('size') != None:
     size = unicode(request.args.get('size'))
-
-  newSpeech = ""
 
   with open('source.txt') as f:
     rawText = f.read()
 
   model = markovify.Text(rawText, state_size=3)
 
-  if size == "":
-    for i in range(2):
-      newSpeech += " " + model.make_sentence()
-  elif size == "tweet":
+  # generates a tweet, the chosen number of sentences, or defaults to two sentences
+  if size == "tweet":
     newSpeech += " " + model.make_short_sentence(140)
   elif is_int(size):
     for i in range(int(size)):
+      newSpeech += " " + model.make_sentence()
+  else size == "":
+    for i in range(2):
       newSpeech += " " + model.make_sentence()
 
   return jsonify({
