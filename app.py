@@ -41,9 +41,13 @@ def index():
     newSpeech += model.make_short_sentence(140)
   elif is_int(size):
     for i in range(int(size)):
+      if (i > 0):
+          newSpeech += " "
       newSpeech += model.make_sentence()
   else size == "":
     for i in range(2):
+      if (i > 0):
+          newSpepech += " "
       newSpeech += model.make_sentence()
 
   return jsonify({
